@@ -9,6 +9,8 @@ It’s ideal for real-time monitoring of your mains power with ESP32 or ESP8266-
 
 Initial source from [Abdurraziq/ZMPT101B-arduino](https://github.com/Abdurraziq/ZMPT101B-arduino), inspired by [rafal83/zmpt101b](https://github.com/rafal83/zmpt101b)
 
+Note: It works perfectly with both the Arduino and ESP-IDF frameworks.
+
 ## Usage
 
 ```
