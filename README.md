@@ -7,7 +7,7 @@ This is an ESPHome external component for measuring AC RMS voltage using the ZMP
 This component reads the analog output of the ZMPT101B module through a defined ADC sensor and computes the true RMS voltage over one or more AC cycles.
 It’s ideal for real-time monitoring of your mains power with ESP32 or ESP8266-based smart devices.
 
-Initial source from https://github.com/Abdurraziq/ZMPT101B-arduino, inspired by https://github.com/rafal83/zmpt101b
+Initial source from [Abdurraziq/ZMPT101B-arduino](https://github.com/Abdurraziq/ZMPT101B-arduino), inspired by [rafal83/zmpt101b](https://github.com/rafal83/zmpt101b)
 
 ## Usage
 
