@@ -46,6 +46,8 @@ component manages the ADC hardware (a limitation on ESP32/ESP8266).
 
 ### How to calibrate sensitivity
 
+First, your sensor need to be calibrated according to [Abdurraziq/ZMPT101B-arduino#steep](https://github.com/Abdurraziq/ZMPT101B-arduino#steep)
+
 The sensitivity value determines how the analog signal is converted into the real AC voltage.
 It depends on your specific ZMPT101B module, hardware, and ADC settings (e.g., attenuation, voltage reference).
 
