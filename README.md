@@ -11,6 +11,8 @@ Initial source from [Abdurraziq/ZMPT101B-arduino](https://github.com/Abdurraziq/
 
 Note: It works perfectly with both the Arduino and ESP-IDF frameworks.
 
+![AC measurement](capture.png)
+
 ## Usage
 
 ```
