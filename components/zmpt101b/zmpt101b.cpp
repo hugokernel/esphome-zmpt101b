@@ -20,7 +20,7 @@ int ZMPT101BSensor::getZeroPoint_() {
 	return measurements_count ? (Vsum / measurements_count) : 0;
 }
 
-void ZMPT101BSensor::loop() {
+void ZMPT101BSensor::update() {
 	double readingVoltage = 0.0;
 
 	for (uint8_t i = 0; i < this->loop_count_; i++) {

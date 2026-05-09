@@ -15,7 +15,7 @@ CONF_FREQUENCY = "frequency"
 CONF_LOOP_COUNT = "loop_count"
 
 zmpt101b_ns = cg.esphome_ns.namespace("zmpt101b")
-ZMPT101BSensor = zmpt101b_ns.class_("ZMPT101BSensor", sensor.Sensor, cg.Component)
+ZMPT101BSensor = zmpt101b_ns.class_("ZMPT101BSensor", sensor.Sensor, cg.PollingComponent)
 
 CONFIG_SCHEMA = sensor.sensor_schema(
     unit_of_measurement="V",
@@ -27,7 +27,7 @@ CONFIG_SCHEMA = sensor.sensor_schema(
     cv.Required(CONF_SENSITIVITY): cv.float_,
     cv.Optional(CONF_FREQUENCY, default=50): cv.positive_int,
     cv.Optional(CONF_LOOP_COUNT, default=50): cv.positive_int,
-}).extend(cv.COMPONENT_SCHEMA)
+}).extend(cv.polling_component_schema('30s'))
 
 async def to_code(config):
     var = cg.new_Pvariable(config[CONF_ID])
