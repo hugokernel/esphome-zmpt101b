@@ -35,7 +35,24 @@ sensor:
     adc_id: zmpt_adc
     frequency: 50
     sensitivity: 8.36
+    measurement_duration: 100ms   # Sampling window per measurement (optional)
+    update_interval: 60s          # How often to measure (optional)
 ```
+
+### Configuration variables
+
+* **adc_id** (*Required*): The ID of the `adc` sensor to read the ZMPT101B analog output from.
+* **sensitivity** (*Required*, float): Calibration factor converting the analog signal to real AC voltage (see below).
+* **frequency** (*Optional*, default `50`): Mains frequency in Hz. Used to align the sampling window to whole AC cycles.
+* **measurement_duration** (*Optional*, default `100ms`): Duration of the single sampling pass. Longer windows average over more cycles for a more stable reading, at the cost of a longer (but non-blocking-per-loop) sample.
+* **update_interval** (*Optional*, default `60s`): How often a measurement is taken and published.
+
+### Non-blocking design
+
+This component is a polling component: it only samples the ADC once per `update_interval`,
+for the short `measurement_duration` window, instead of continuously in the main loop.
+The RMS is computed in a single pass (deriving both the DC offset and the AC RMS from the
+same samples), which keeps the sampling short and avoids starving other sensors, WiFi, or the API.
 
 ### Why declare the ADC sensor separately?
 

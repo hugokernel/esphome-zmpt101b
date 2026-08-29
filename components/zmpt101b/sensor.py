@@ -1,9 +1,8 @@
 import esphome.codegen as cg
 import esphome.config_validation as cv
 from esphome.components import sensor
-from esphome.const import CONF_ID, CONF_NAME, CONF_UNIT_OF_MEASUREMENT
+from esphome.const import CONF_ID
 
-from esphome.components import sensor
 adc_ns = cg.esphome_ns.namespace("adc")
 ADCSensor = adc_ns.class_("ADCSensor", sensor.Sensor)
 
@@ -12,10 +11,10 @@ CODEOWNERS = ["@toniotruel"]
 CONF_ADC_ID = "adc_id"
 CONF_SENSITIVITY = "sensitivity"
 CONF_FREQUENCY = "frequency"
-CONF_LOOP_COUNT = "loop_count"
+CONF_MEASUREMENT_DURATION = "measurement_duration"
 
 zmpt101b_ns = cg.esphome_ns.namespace("zmpt101b")
-ZMPT101BSensor = zmpt101b_ns.class_("ZMPT101BSensor", sensor.Sensor, cg.Component)
+ZMPT101BSensor = zmpt101b_ns.class_("ZMPT101BSensor", sensor.Sensor, cg.PollingComponent)
 
 CONFIG_SCHEMA = sensor.sensor_schema(
     unit_of_measurement="V",
@@ -26,8 +25,10 @@ CONFIG_SCHEMA = sensor.sensor_schema(
     cv.Required(CONF_ADC_ID): cv.use_id(ADCSensor),
     cv.Required(CONF_SENSITIVITY): cv.float_,
     cv.Optional(CONF_FREQUENCY, default=50): cv.positive_int,
-    cv.Optional(CONF_LOOP_COUNT, default=50): cv.positive_int,
-}).extend(cv.COMPONENT_SCHEMA)
+    cv.Optional(
+        CONF_MEASUREMENT_DURATION, default="100ms"
+    ): cv.positive_time_period_milliseconds,
+}).extend(cv.polling_component_schema("60s"))
 
 async def to_code(config):
     var = cg.new_Pvariable(config[CONF_ID])
@@ -38,4 +39,8 @@ async def to_code(config):
     cg.add(var.set_adc_sensor(adc))
     cg.add(var.set_sensitivity(config[CONF_SENSITIVITY]))
     cg.add(var.set_frequency(config[CONF_FREQUENCY]))
-    cg.add(var.set_loop_count(config[CONF_LOOP_COUNT]))
+    cg.add(
+        var.set_measurement_duration(
+            config[CONF_MEASUREMENT_DURATION].total_milliseconds
+        )
+    )
